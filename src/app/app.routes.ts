@@ -1,21 +1,30 @@
 import { Routes, RouterModule } from '@angular/router';
 
 
+
+import { PagesComponent } from './pages/pages.component';
+
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ProgressComponent } from './pages/progress/progress.component';
 import { Graficas1Component } from './pages/graficas1/graficas1.component';
 import { NopagefoundComponent } from './shared/nopagefound/nopagefound.component';
+import { LoginComponent } from './login/login.component';
 
 
 
 
 const appRoutes: Routes = [
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'login', component: DashboardComponent },
+    { path: '',
+      component: PagesComponent,
+      children: [
+          { path: 'dashboard', component: DashboardComponent },
+          { path: 'progress', component: ProgressComponent },
+          { path: 'graficas1', component: Graficas1Component },
+          { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
+      ]
+    },
+    { path: 'login', component: LoginComponent },
     { path: 'register', component: DashboardComponent },
-    { path: 'progress', component: ProgressComponent },
-    { path: 'graficas1', component: Graficas1Component },
-    { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: '**', component: NopagefoundComponent }
 ];
 
