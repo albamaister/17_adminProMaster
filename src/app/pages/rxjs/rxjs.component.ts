@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
-import { retry } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -12,9 +12,7 @@ export class RxjsComponent implements OnInit {
 
   constructor() {
 
-    this.regresaObservable().pipe(
-      retry(2)
-    ).subscribe(
+    this.regresaObservable().subscribe(
       numero =>  console.log('Subs ', numero),
       error => console.error('Error en los obs ', error),
       () => console.log('El observador termino')
@@ -24,24 +22,32 @@ export class RxjsComponent implements OnInit {
   ngOnInit() {
   }
 
-  regresaObservable(): Observable<number> {
-    let obs = new Observable((observer: Subscriber<number>) => {
+  regresaObservable(): Observable<any> {
+    let obs = new Observable((observer: Subscriber<any>) => {
       let contador = 0;
       let intervalo = setInterval(() => {
         contador += 1;
-        observer.next(contador);
+        
+        const salida = {
+          valor: contador
+        };
+        observer.next(salida);
 
         if (contador === 3) {
           clearInterval(intervalo);
           observer.complete();
         }
 
-        if (contador === 2) {
-          // clearInterval(intervalo);
-          observer.error('Auxilio!');
-        }
+        // if (contador === 2) {
+        //   // clearInterval(intervalo);
+        //   observer.error('Auxilio!');
+        // }
       }, 1000);
-    });
+    }).pipe(
+      map( resp => {
+        return resp.valor;
+      } ) // este operador map recibe una funcion que permite transformar la data
+    );
 
     return obs;
   }
