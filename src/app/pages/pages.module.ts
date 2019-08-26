@@ -19,6 +19,7 @@ import { AccountSettingsComponent } from '../components/account-settings/account
 // ng2-charts
 
 import { ChartsModule } from 'ng2-charts';
+import { PromesasComponent } from './promesas/promesas.component';
 
 
 
@@ -30,7 +31,8 @@ import { ChartsModule } from 'ng2-charts';
         PagesComponent,
         IncrementadorComponent,
         GraficoDonaComponent,
-        AccountSettingsComponent
+        AccountSettingsComponent,
+        PromesasComponent
     ],
     exports: [
         DashboardComponent,
