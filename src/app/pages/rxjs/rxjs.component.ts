@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 
 
 @Component({
@@ -46,7 +46,17 @@ export class RxjsComponent implements OnInit {
     }).pipe(
       map( resp => {
         return resp.valor;
-      } ) // este operador map recibe una funcion que permite transformar la data
+      } ), // este operador map recibe una funcion que permite transformar la data
+      filter((valor, index) => {
+        if ((valor % 2) === 1) {
+          // impar
+          return true;
+        } else {
+          // par
+          return false;
+        }
+        return true;
+      })
     );
 
     return obs;
