@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+import swal from 'sweetalert';
+import { UsuarioService } from '../services/service.index';
+import { Usuario } from '../models/usuario.model';
+import { Router } from '@angular/router';
+
 declare function init_plugins(); // de esta manera se puede llamar cualquier script que se encuentre fuera de
 // angular en un archivo de javascript, esto funciona con plugins, carruseles,  tooltips
 
@@ -13,7 +18,10 @@ export class RegisterComponent implements OnInit {
 
   forma: FormGroup;
 
-  constructor() { }
+  constructor(
+    public _usuarioService: UsuarioService,
+    public router: Router
+  ) { }
 
   sonIguales( group: FormGroup ) {
 
@@ -48,13 +56,22 @@ export class RegisterComponent implements OnInit {
     }
 
     if ( !this.forma.value.condiciones ) {
-
-      console.log('Debe de aceptar las condiciones');
+      swal('Importante!', 'Debe de aceptar las condiciones!', 'warning');
       return;
 
     }
 
-    console.log(this.forma.value);
+    const usuario = new Usuario(
+      this.forma.value.nombre,
+      this.forma.value.correo,
+      this.forma.value.password
+  );
+
+    this._usuarioService.crearUsuario(usuario)
+      .subscribe( resp => {
+        this.router.navigate(['/login']);
+      } );
+
   }
 
 }
