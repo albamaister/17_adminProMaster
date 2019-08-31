@@ -11,10 +11,46 @@ import swal from 'sweetalert';
 })
 export class UsuarioService {
 
+  usuario: Usuario;
+  token: string;
+
   constructor(
     public http: HttpClient
   ) {
-    console.log('Sercicio de usaurio listo');
+    this.cargarStorage();
+   }
+
+   estaLogeado() {
+     return ( this.token.length > 5 ) ? true : false;
+   }
+
+   cargarStorage() {
+     if ( localStorage.getItem('token') ) {
+       this.token = localStorage.getItem('token');
+       this.usuario = JSON.parse(localStorage.getItem('usuario'));
+     } else {
+       this.token = '';
+       this.usuario = null;
+     }
+   }
+
+   guardarStorage( id: string, token: string, usuario: Usuario) {
+
+    localStorage.setItem('id', id);
+    localStorage.setItem('token', token);
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+
+    this.usuario = usuario;
+    this.token = token;
+   }
+
+   loginGoogle( token: string ) {
+     let url = URL_SERVICIOS + '/login/google';
+     return this.http.post(url, { token }).pipe(
+       map( (resp: any) => {
+         this.guardarStorage(resp.id, resp.token, resp.usuario);
+         return true;
+       } ));
    }
 
    login( usuario: Usuario, recordar: boolean = false) {
@@ -32,9 +68,7 @@ export class UsuarioService {
     return this.http.post( url, usuario ).pipe(
       map( (resp: any) => {
 
-        localStorage.setItem('id', resp.id);
-        localStorage.setItem('token', resp.token);
-        localStorage.setItem('usuario', JSON.stringify(resp.usuario));
+        this.guardarStorage(resp.id, resp.token, resp.usuario);
 
         return true;
 
