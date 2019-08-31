@@ -5,6 +5,7 @@ import { URL_SERVICIOS } from '../../config/config';
 
 import { map } from 'rxjs/internal/operators/map';
 import swal from 'sweetalert';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class UsuarioService {
   token: string;
 
   constructor(
-    public http: HttpClient
+    public http: HttpClient,
+    public router: Router
   ) {
     this.cargarStorage();
    }
@@ -42,6 +44,15 @@ export class UsuarioService {
 
     this.usuario = usuario;
     this.token = token;
+   }
+
+   logout() {
+     this.usuario = null;
+     this.token = '';
+
+     localStorage.removeItem('token');
+     localStorage.removeItem('usuario');
+     this.router.navigate(['/login']);
    }
 
    loginGoogle( token: string ) {
@@ -87,7 +98,6 @@ export class UsuarioService {
             return resp.usuario;
           })
     );
-      
 
   }
 
