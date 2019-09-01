@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+import { CommonModule } from '@angular/common';
 
 import { PagesComponent } from './pages.component';
 
@@ -48,6 +49,7 @@ import { ProfileComponent } from './profile/profile.component';
         PagesComponent
     ],
     imports: [
+        CommonModule,
         SharedModule,
         PAGES_ROUTES,
         FormsModule,
