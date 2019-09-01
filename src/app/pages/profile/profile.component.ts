@@ -11,6 +11,8 @@ export class ProfileComponent implements OnInit {
 
   usuario: Usuario;
 
+  imagenSubir: File;
+
   constructor(public _usuarioService: UsuarioService) {
     this.usuario = _usuarioService.usuario;
    }
@@ -21,12 +23,31 @@ export class ProfileComponent implements OnInit {
   guardar( usuario: Usuario ) {
 
     this.usuario.nombre = usuario.nombre;
-    this.usuario.email = usuario.email;
+    if ( !this.usuario.google ) {
+
+      this.usuario.email = usuario.email;
+    }
 
     this._usuarioService.actualziarUsuario( this.usuario )
-            .subscribe( resp => {
-              console.log(resp);
-            } );
+            .subscribe();
+  }
+
+  seleccionImagen( archivo: File ) {
+
+    if (!archivo) {
+
+      this.imagenSubir = null;
+      return;
+
+    }
+
+    this.imagenSubir = archivo;
+    console.log(archivo);
+
+  }
+
+  cambiarImagen() {
+    this._usuarioService.cambiarImagen(this.imagenSubir, this.usuario._id);
   }
 
 }
