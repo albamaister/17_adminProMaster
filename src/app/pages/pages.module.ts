@@ -24,6 +24,7 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 
 // pipeModule
 import { PipesModule } from '../pipes/pipes.module';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -37,7 +38,8 @@ import { PipesModule } from '../pipes/pipes.module';
         GraficoDonaComponent,
         AccountSettingsComponent,
         PromesasComponent,
-        RxjsComponent
+        RxjsComponent,
+        ProfileComponent
     ],
     exports: [
         DashboardComponent,
