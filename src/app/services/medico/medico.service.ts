@@ -15,8 +15,8 @@ export class MedicoService {
 
   constructor(public http: HttpClient, public _usuarioService: UsuarioService) { }
 
-  cargarMedicos() {
-    let url = URL_SERVICIOS + '/medico';
+  cargarMedicos(desde: number = 0) {
+    let url = URL_SERVICIOS + '/medico?desde=' + desde;
 
     return this.http.get(url)
         .pipe(
