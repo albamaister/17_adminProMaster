@@ -1,7 +1,7 @@
 <div class="row animated fadeIn">
     <div class="col-md-6">
         <div class="card card-body">
-            <h3 class="box-title m-b-0">Doctor: NOMBRE DOCTOR</h3>
+            <h3 class="box-title m-b-0">Doctor: {{medico.nombre}}</h3>
             <!-- <p class="text-muted m-b-30 font-13"> Bootstrap Elements </p> -->
             <div class="row">
                 <div class="col-sm-12 col-xs-12">
@@ -44,7 +44,7 @@
         <div class="card card-body">
 
             <h4 class="box-title m-b-0">Photography</h4>
-            <img [src]="medico.img | imagen:'medico'" class="rounded img-fluid">
+            <img (click)="cambiarFoto()" [src]="medico.img | imagen:'medico'" class="rounded img-fluid pointer">
         </div>
     </div>
 </div>
