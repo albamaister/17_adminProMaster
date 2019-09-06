@@ -7,6 +7,7 @@ import { map } from 'rxjs/internal/operators/map';
 import swal from 'sweetalert';
 import { Router } from '@angular/router';
 import { SubirArchivoService } from '../subir-archivo/subir-archivo.service';
+import { catchError } from 'rxjs/internal/operators/catchError';
 
 @Injectable({
   providedIn: 'root'
@@ -91,10 +92,14 @@ export class UsuarioService {
 
         this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu);
         console.log(resp);
-
         return true;
-
-    }));
+       }),
+       catchError(error => {
+        console.error('HTTP Error', error.status);
+        swal('Error login', error.error.mensaje, 'error');
+        throw error;
+      })
+    );
 
    }
 
@@ -107,6 +112,11 @@ export class UsuarioService {
           map( (resp: any) => {
             swal('Usuario creado', usuario.email, 'success');
             return resp.usuario;
+          }),
+          catchError(error => {
+            console.error('HTTP Error', error.status);
+            swal(error.error.mensaje, error.error.errors.message, 'error');
+            throw error;
           })
     );
 
@@ -121,12 +131,14 @@ export class UsuarioService {
             if ( usuario._id === this.usuario._id ) {
               let usuarioDB: Usuario = resp.usuario;
               this.guardarStorage(usuarioDB._id, this.token, usuarioDB, this.menu);
-
             }
-
-
             swal('User updated', usuario.nombre, 'success');
             return true;
+            }),
+            catchError(error => {
+              console.error('HTTP Error', error.status);
+              swal(error.error.mensaje, error.error.errors.message, 'error');
+              throw error;
             })
           );
   }
