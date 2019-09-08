@@ -34,6 +34,7 @@ export class UsuarioService {
          map( (resp: any) => {
            this.token = resp.token;
            localStorage.setItem('token', this.token);
+          //  console.log('token renovado');
            return true;
          } ),
          catchError(error => {
@@ -109,7 +110,7 @@ export class UsuarioService {
       map( (resp: any) => {
 
         this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu);
-        console.log(resp);
+        // console.log(resp);
         return true;
        }),
        catchError(error => {

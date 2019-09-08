@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../../services/service.index';
 
 @Component({

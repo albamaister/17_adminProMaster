@@ -10,7 +10,7 @@ import { map, filter } from 'rxjs/operators';
 })
 export class RxjsComponent implements OnInit, OnDestroy {
 
-  suscription: Subscription;  
+  suscription: Subscription;
 
   constructor() {
 
@@ -34,7 +34,6 @@ export class RxjsComponent implements OnInit, OnDestroy {
       let contador = 0;
       let intervalo = setInterval(() => {
         contador += 1;
-        
         const salida = {
           valor: contador
         };
